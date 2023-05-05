@@ -7,18 +7,32 @@ let engineData = []
 /**
  * call only normalCase() or bugCase() and read their results in console
  */
-normalCase()
-// bugCase()
+// normalCase()
+bugCase()
 
 
 /**
 * This one produce expected result. Two data in two citaions out. 
 */
 function normalCase() {
-  const citations = cite(data1(), 0, [], [])
-  const citationPre = [[citations[0].citationId, 0]]
-  const result = cite(data2(), 1, citationPre, [])
-  console.log(result)
+  const firstResult = cite(data1(), 0, [], [])
+  const citationPre = [[firstResult[0].citationId, 0]]
+  const secondResult = cite(data2(), 1, citationPre, [])
+  console.log(secondResult)
+
+  // secondResult
+  // [
+  //   {
+  //       "citationId": "a18i6afo7go",
+  //       "index": 0,
+  //       "citation": "(Gerald et al., 2004)"
+  //   },
+  //   {
+  //       "citationId": "a1vf8ihn1v6",
+  //       "index": 1,
+  //       "citation": "(<i>Brief Introduction to Kudos</i>, 2015)"
+  //   }
+  // ]
 }
 
 /**
@@ -29,10 +43,20 @@ function normalCase() {
 * `normalCase()`
 */
 function bugCase() {
-  const citations = cite(data2(), 0, [], [])
-  const citationPre = [[citations[0].citationId, 0]]
-  const result = cite(data1(), 1, citationPre, [])
-  console.log(result)
+  const firstResult = cite(data2(), 0, [], [])
+  const citationPre = [[firstResult[0].citationId, 0]]
+  const secondResult = cite(data1(), 1, citationPre, [])
+  console.log(secondResult)
+
+  // (<i>Brief Introduction to Kudos</i>, 2015) of firstResult
+  // is missing in the secondResult
+  // [
+  //   {
+  //     "citationId": "a201uc87grd",
+  //     "index": 1,
+  //     "citation": "(Gerald et al., 2004)"
+  //   }
+  // ]
 }
 
 function cite(data, insertIndex, citationPre, citationPost) {
@@ -114,6 +138,7 @@ function data2() {
     {
       "type": "webpage",
       "title": "Brief introduction to Kudos",
+      // empty author field seems to be the root of the bug
       "author": [],
       "URL": "https://www.youtube.com/watch?v=1i3tqPCalaA",
       "abstract": "You've published your article, but who's going to read and cite it? Our free service can help your publication rise to the top of the millions published every year, with simple steps including:- explaining: giving your publication a short title, a lay summary and an impact statement- enriching: linking related sources such as videos and presentations to your article- sharing: sending links via email, social media, websites and blogs- measuring: seeing the impact of these steps on metrics such as views and downloads of your work.",
